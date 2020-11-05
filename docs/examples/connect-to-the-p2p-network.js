@@ -1,5 +1,6 @@
 'use strict';
 
+// 将默认网络设置为 main
 const bcoin = require('../..').set('main');
 
 const Logger = require('blgr');
@@ -9,7 +10,7 @@ const logger = new Logger({
   level: 'info'
 });
 
-// Create a blockchain and store it in memory.
+// Create a blockchain and store it in memory.（将区块链存储在内存中）
 const blocks = bcoin.blockstore.create({
   memory: true
 });
@@ -30,7 +31,7 @@ const mempool = new bcoin.Mempool({
 const pool = new bcoin.Pool({
   chain: chain,
   mempool: mempool,
-  maxPeers: 8,
+  maxPeers: 8, 
   logger: logger
 });
 
@@ -68,6 +69,7 @@ const pool = new bcoin.Pool({
   process.exit(1);
 });;
 
+// 以下可要可不要！（上面为主网，下面为测试网）
 // Start up a testnet sync in-memory
 // while we're at it (because we can).
 
