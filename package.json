@@ -50,7 +50,8 @@
     "bweb": "git+https://github.com/bcoin-org/bweb.git#semver:=0.1.9",
     "loady": "git+https://github.com/chjj/loady.git#semver:~0.0.1",
     "n64": "git+https://github.com/chjj/n64.git#semver:~0.2.10",
-    "nan": "git+https://github.com/braydonf/nan.git#semver:=2.14.0"
+    "nan": "git+https://github.com/braydonf/nan.git#semver:=2.14.0",
+    "webpack": "^5.5.0"
   },
   "bundleDependencies": [
     "bcfg",
@@ -83,8 +84,14 @@
     "nan"
   ],
   "devDependencies": {
+    "@rollup/plugin-commonjs": "^16.0.0",
+    "@rollup/plugin-json": "^4.1.0",
+    "@rollup/plugin-node-resolve": "^10.0.0",
     "bmocha": "git+https://github.com/bcoin-org/bmocha.git#semver:=2.1.2",
-    "webpack-cli": "^4.1.0"
+    "rollup-plugin-livereload": "^2.0.0",
+    "rollup-plugin-terser": "^7.0.2",
+    "uglifyjs-webpack-plugin": "^2.2.0",
+    "webpack-cli": "^4.2.0"
   },
   "main": "./lib/bcoin.js",
   "bin": {
@@ -107,7 +114,11 @@
     "test-browser": "NODE_BACKEND=js bmocha --reporter spec test/*.js",
     "test-file": "bmocha --reporter spec",
     "test-file-browser": "NODE_BACKEND=js bmocha --reporter spec",
-    "test-ci": "nyc -a -n 'lib/**/*.js' --reporter=lcov --reporter=text npm run test"
+    "test-ci": "nyc -a -n 'lib/**/*.js' --reporter=lcov --reporter=text npm run test",
+    "webpack": "webpack --config webpack.browser.js",
+    "webpack-browser": "webpack --config webpack.browser.js",
+    "webpack-compat": "webpack --config webpack.compat.js",
+    "webpack-node": "webpack --config webpack.node.js"
   },
   "browser": {
     "./lib/hd/nfkd": "./lib/hd/nfkd-compat.js",

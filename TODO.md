@@ -1,1 +1,2 @@
 - 代码打包和压缩，考虑：rollup。而不是什么uglyify之类的垃圾。
+- 将 CommonJS 风格代码写成 ES 风格。
