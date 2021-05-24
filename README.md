@@ -1,5 +1,7 @@
 # Bcoin
 
+> [自己的重点笔记](https://github.com/stevekeol/marktext-articles/blob/master/bcoin%E7%9A%84%E6%B2%89%E8%BF%B7%E4%B9%8B%E8%B7%AF.md)
+
 [![Build Status][circleci-status-img]][circleci-status-url]
 [![Coverage Status][coverage-status-img]][coverage-status-url]
 

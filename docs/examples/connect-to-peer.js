@@ -1,7 +1,7 @@
 'use strict';
 
 /*
- * Usage:
+ * Usage:(Node)
  *  Run another Bitcoin node on local regtest network, for example
  *    $ ../../bin/bcoin --network=regtest
  *  Execute this script with the other node's address and port

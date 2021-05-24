@@ -7,7 +7,7 @@ const WSProxy = require('./wsproxy');
 const index = fs.readFileSync(`${__dirname}/index.html`);
 
 const app = fs.readFileSync(`${__dirname}/app.js`);
-const worker = fs.readFileSync(`${__dirname}/worker.js`);
+// const worker = fs.readFileSync(`${__dirname}/worker.js`);
 
 
 const proxy = new WSProxy({
