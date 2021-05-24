@@ -113,7 +113,6 @@
     "test-file": "bmocha --reporter spec",
     "test-file-browser": "NODE_BACKEND=js bmocha --reporter spec",
     "test-ci": "nyc -a -n 'lib/**/*.js' --reporter=lcov --reporter=text npm run test",
-
     "browserify": "browserify -s bcoin lib/bcoin-browser.js > browser/app.test.js",
     "rollup": "rollup lib/workers/worker.js -o bundle.js -f cjs",
     "webpack": "webpack --config webpack.browser.js",
