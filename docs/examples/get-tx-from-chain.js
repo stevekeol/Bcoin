@@ -34,9 +34,9 @@ const pool = new bcoin.Pool({
   await chain.open();
 
   // Connect the blockchain to the network
-  await pool.open();
-  await pool.connect();
-  pool.startSync();
+  await pool.open(); //打开网络节点池，等待chain的加载
+  await pool.connect(); //将节点池连接网络
+  pool.startSync(); //开始区块链同步
 
   // Monitor blockchain height and react when we hit the target
   chain.on('connect', async (entry, block) => {

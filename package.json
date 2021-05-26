@@ -119,8 +119,8 @@
     "webpack-browser": "webpack --config webpack.browser.js",
     "webpack-compat": "webpack --config webpack.compat.js",
     "webpack-node": "webpack --config webpack.node.js",
-    "bpkg-app": " bpkg --browser --umd --plugin [ uglify-es --toplevel ] --name Bcoin --output browser/app.js lib/bcoin-browser.js",
-    "bpkg-worker": " bpkg --browser --plugin [ uglify-es --toplevel ] --output browser/worker.js /lib/workers/worker.js"
+    "bpkg-app": "bpkg --browser --umd --plugin [ uglify-es --toplevel ] --name Bcoin --output browser/app.js lib/bcoin-browser.js",
+    "bpkg-worker": "bpkg --browser --plugin [ uglify-es --toplevel ] --output browser/worker.js /lib/workers/worker.js"
   },
   "browser": {
     "./lib/hd/nfkd": "./lib/hd/nfkd-compat.js",

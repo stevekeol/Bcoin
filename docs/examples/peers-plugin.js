@@ -32,7 +32,7 @@ const node = new bcoin.FullNode({
   workers: true
 });
 
-node.use(MyPlugin);
+node.use(MyPlugin); // 自定义插件的使用方式
 
 (async () => {
   const plugin = node.require('my-plugin');
