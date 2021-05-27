@@ -2,6 +2,43 @@
 
 > [自己的重点笔记](https://github.com/stevekeol/marktext-articles/blob/master/bcoin%E7%9A%84%E6%B2%89%E8%BF%B7%E4%B9%8B%E8%B7%AF.md)
 
+## 统一入口：
+
+[Bcoin功能流程依赖图](https://www.processon.com/diagraming/5fa3cc56e0b34d7a1a9803d3)
+[Bcoin内在核心机制&事件体系](https://bcoin.io/guides/events.html)
+[Bcion详尽的API文档](https://bcoin.io/api-docs/index.html#bcoin-client-requests)
+[Bcoin在Browser中的使用](https://bcoin.io/guides/browser)
+
+## 分支
+
+- remark -> 源码注解
+- typescript -> 用Typesript改写原Bcoin
+
+
+## bcoin-browser.js中各模块的功能定义
+
+|           Codebase             |      Description       |
+| :----------------------------- | :-------------------:  |
+| [blockstore](blockstore)       |  blocks 内存/文件/数据库 |
+| [blockchain](blockchain)       |  构建chain             |
+| [btc](btc)                     |    React frontend     |
+| [client](client)               | Puppeteer shenanigans |
+| [coins](coins)                 |   Electron Wrapper    |
+| [golomb](golomb)               |   React Native App    |
+| [hd](hd)                       | Shared utils web/app  |
+| [indexer](indexer)             |   Next.js frontend    |
+| [mempool](mempool)             |      交易池      |
+| [mining](mining)               |      挖矿       |
+| [net](net)                     |      网络层       |
+| [node](node)                   |      抽象/SPV/全节点       |
+| [primitives](primitives)       |      API Client       |
+| [protocol](protocol)           |      API Client       |
+| [script](script)               |      API Client       |
+| [utils](utils)                 |      API Client       |
+| [wallet](wallet)               |      API Client       |
+| [workers](workers)             |      API Client       |
+
+
 ## 基于Bcoin的 `Taiki` 总体规划路线
 
 #### 在浏览器端运行起单个bcoin.bundle.js
