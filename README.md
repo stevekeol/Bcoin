@@ -4,10 +4,10 @@
 
 ## 统一入口：
 
-[Bcoin功能流程依赖图](https://www.processon.com/diagraming/5fa3cc56e0b34d7a1a9803d3)
-[Bcoin内在核心机制&事件体系](https://bcoin.io/guides/events.html)
-[Bcion详尽的API文档](https://bcoin.io/api-docs/index.html#bcoin-client-requests)
-[Bcoin在Browser中的使用](https://bcoin.io/guides/browser)
++ [Bcoin功能流程依赖图](https://www.processon.com/diagraming/5fa3cc56e0b34d7a1a9803d3)
++ [Bcoin内在核心机制&事件体系](https://bcoin.io/guides/events.html)
++ [Bcion详尽的API文档](https://bcoin.io/api-docs/index.html#bcoin-client-requests)
++ [Bcoin在Browser中的使用](https://bcoin.io/guides/browser)
 
 ## 分支
 
@@ -21,23 +21,24 @@
 | :----------------------------- | :-------------------:  |
 | [blockstore](blockstore)       |  blocks 内存/文件/数据库 |
 | [blockchain](blockchain)       |  构建chain             |
-| [btc](btc)                     |    React frontend     |
-| [client](client)               | Puppeteer shenanigans |
-| [coins](coins)                 |   Electron Wrapper    |
-| [golomb](golomb)               |   React Native App    |
-| [hd](hd)                       | Shared utils web/app  |
-| [indexer](indexer)             |   Next.js frontend    |
-| [mempool](mempool)             |      交易池      |
-| [mining](mining)               |      挖矿       |
-| [net](net)                     |      网络层       |
-| [node](node)                   |      抽象/SPV/全节点       |
-| [primitives](primitives)       |      API Client       |
-| [protocol](protocol)           |      API Client       |
-| [script](script)               |      API Client       |
-| [utils](utils)                 |      API Client       |
-| [wallet](wallet)               |      API Client       |
-| [workers](workers)             |      API Client       |
+| [btc](btc)                     |  BTC中amount和uri的转换 |
+| [client](client)               |  节点/钱包客户端        |
+| [coins](coins)                 |  UTXO的管理             |
+| [golomb](golomb)               |  区块过滤器?数据压缩?    |
+| [hd](hd)                       |  分层确定性keys         |
+| [indexer](indexer)             |  交易索引器/地址索引器    |
+| [mempool](mempool)             |  交易池                |
+| [mining](mining)               |  挖矿                  |
+| [net](net)                     |  网络层                 |
+| [node](node)                   |  抽象/SPV/全节点        |
+| [primitives](primitives)       |  原语(注释1)           |
+| [protocol](protocol)           |  协议(共识，网络等常量)  |
+| [script](script)               |  工具脚本?              |
+| [utils](utils)                 |  工具(二分查找/消息签名等) |
+| [wallet](wallet)               |  钱包                   |
+| [workers](workers)             |  工作线程               |
 
+> 注释1：【原语】抽象区块，地址，区块，币，过滤器，区块头，输入，邀请函，钥匙环，内存区块，梅克尔区块，可变交易，输出，输出点，交易，交易元数据
 
 ## 基于Bcoin的 `Taiki` 总体规划路线
 
