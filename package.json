@@ -103,8 +103,13 @@
     "bwallet-cli": "./bin/bwallet-cli"
   },
   "scripts": {
+    "docs:gen": "jsdoc -c jsdoc.json",
+    "docs:server": "cd docs/reference && serve",
+
+    "bpkg-app": "bpkg --browser --umd --plugin [ uglify-es --toplevel ] --name Bcoin --output browser/app.js lib/bcoin-browser.js",
+    "bpkg-worker": "bpkg --browser --plugin [ uglify-es --toplevel ] --output browser/worker.js /lib/workers/worker.js",
+    
     "clean": "rm -f {browser/,}{bcoin.js,bcoin-worker.js,app.js,worker.js}",
-    "docs": "jsdoc -c jsdoc.json",
     "lint": "eslint $(cat .eslintfiles) || exit 0",
     "lint-ci": "eslint $(cat .eslintfiles)",
     "lint-file": "eslint",
@@ -113,14 +118,13 @@
     "test-file": "bmocha --reporter spec",
     "test-file-browser": "NODE_BACKEND=js bmocha --reporter spec",
     "test-ci": "nyc -a -n 'lib/**/*.js' --reporter=lcov --reporter=text npm run test",
+
     "browserify": "browserify -s bcoin lib/bcoin-browser.js > browser/app.test.js",
     "rollup": "rollup lib/workers/worker.js -o bundle.js -f cjs",
     "webpack": "webpack --config webpack.browser.js",
     "webpack-browser": "webpack --config webpack.browser.js",
     "webpack-compat": "webpack --config webpack.compat.js",
-    "webpack-node": "webpack --config webpack.node.js",
-    "bpkg-app": "bpkg --browser --umd --plugin [ uglify-es --toplevel ] --name Bcoin --output browser/app.js lib/bcoin-browser.js",
-    "bpkg-worker": "bpkg --browser --plugin [ uglify-es --toplevel ] --output browser/worker.js /lib/workers/worker.js"
+    "webpack-node": "webpack --config webpack.node.js"
   },
   "browser": {
     "./lib/hd/nfkd": "./lib/hd/nfkd-compat.js",
