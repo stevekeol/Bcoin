@@ -20,6 +20,7 @@
 
 ## 文件的依赖关系树
 
+```
 workers
 ├──index
 │  ├──workerpool
@@ -39,6 +40,7 @@ workers
 ├──parent-browser.js
 ├──README.md
 └──worker.js
+```
 
 ## 文件详解
 
