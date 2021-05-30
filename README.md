@@ -11,6 +11,8 @@
 
 ## 分支
 
+> 暂时还没这样做!
+
 - remark -> 源码注解
 - typescript -> 用Typesript改写原Bcoin
 
@@ -19,24 +21,24 @@
 
 |           Codebase             |      Description       |
 | :----------------------------- | :-------------------:  |
-| [blockstore](blockstore)       |  blocks 内存/文件/数据库 |
+| [blockstore](./lib/blockstore)       |  blocks 内存/文件/数据库 |
 | [blockchain](blockchain)       |  构建chain             |
-| [btc](btc)                     |  BTC中amount和uri的转换 |
-| [client](client)               |  节点/钱包客户端        |
-| [coins](coins)                 |  UTXO的管理             |
-| [golomb](golomb)               |  区块过滤器?数据压缩?    |
-| [hd](hd)                       |  分层确定性keys         |
-| [indexer](indexer)             |  交易索引器/地址索引器    |
-| [mempool](mempool)             |  交易池                |
-| [mining](mining)               |  挖矿                  |
-| [net](net)                     |  网络层                 |
-| [node](node)                   |  抽象/SPV/全节点        |
-| [primitives](primitives)       |  原语(注释1)           |
-| [protocol](protocol)           |  协议(共识，网络等常量)  |
-| [script](script)               |  工具脚本?              |
-| [utils](utils)                 |  工具(二分查找/消息签名等) |
-| [wallet](wallet)               |  钱包                   |
-| [workers](workers)             |  工作线程               |
+| [btc](./lib/btc)                     |  BTC中amount和uri的转换 |
+| [client](./lib/client)               |  节点/钱包客户端        |
+| [coins](./lib/coins)                 |  UTXO的管理             |
+| [golomb](./lib/golomb)               |  区块过滤器?数据压缩?    |
+| [hd](./lib/hd)                       |  分层确定性keys         |
+| [indexer](./lib/indexer)             |  交易索引器/地址索引器    |
+| [mempool](./lib/mempool)             |  交易池                |
+| [mining](./lib/mining)               |  挖矿                  |
+| [net](./lib/net)                     |  网络层                 |
+| [node](./lib/node)                   |  抽象/SPV/全节点        |
+| [primitives](./lib/primitives)       |  原语(注释1)           |
+| [protocol](./lib/protocol)           |  协议(共识，网络等常量)  |
+| [script](./lib/script)               |  工具脚本?              |
+| [utils](./lib/utils)                 |  工具(二分查找/消息签名等) |
+| [wallet](./lib/wallet)               |  钱包                   |
+| [workers](./lib/workers)             |  工作线程               |
 
 > 注释1：【原语】抽象区块，地址，区块，币，过滤器，区块头，输入，邀请函，钥匙环，内存区块，梅克尔区块，可变交易，输出，输出点，交易，交易元数据
 
@@ -82,12 +84,6 @@
 
 ------------------------------------------------------------------
 
-[![Build Status][circleci-status-img]][circleci-status-url]
-[![Coverage Status][coverage-status-img]][coverage-status-url]
-
-**Bcoin** is an alternative implementation of the Bitcoin protocol, written in
-JavaScript and C/C++ for Node.js.
-
 Bcoin is well tested and aware of all known consensus rules. It is currently
 used in production as the consensus backend and wallet system for
 [purse.io][purse].
@@ -103,47 +99,12 @@ used in production as the consensus backend and wallet system for
 
 Try it in the browser: [https://bcoin.io/browser/](https://bcoin.io/browser/)
 
-## Install
-
-```
-$ git clone git://github.com/bcoin-org/bcoin.git
-$ cd bcoin
-$ npm rebuild
-$ ./bin/bcoin
-```
-
-See the [Getting started][guide] guide for more in-depth installation
-instructions, including verifying releases. If you're upgrading, see the
-latest changes via the [Changelog][changelog].
 
 ## Documentation
 
 - General docs: [docs/](docs/README.md)
 - Wallet and node API docs: https://bcoin.io/api-docs/
 - Library API docs: https://bcoin.io/docs/
-
-## Support
-
-Join us on [freenode][freenode] in the [#bcoin][irc] channel.
-
-## Disclaimer
-
-Bcoin does not guarantee you against theft or lost funds due to bugs, mishaps,
-or your own incompetence. You and you alone are responsible for securing your
-money.
-
-## Contribution and License Agreement
-
-If you contribute code to this project, you are implicitly allowing your code
-to be distributed under the MIT license. You are also implicitly verifying that
-all code is your original work. `</legalese>`
-
-## License
-
-- Copyright (c) 2014-2015, Fedor Indutny (MIT License).
-- Copyright (c) 2014-2017, Christopher Jeffrey (MIT License).
-
-See LICENSE for more info.
 
 [purse]: https://purse.io
 [guide]: docs/getting-started.md
