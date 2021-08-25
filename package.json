@@ -12,6 +12,30 @@
   "contributors": [
     "Christopher Jeffrey <chjjeffrey@gmail.com>"
   ],
+  "scripts": {
+    "docs:gen": "jsdoc -c jsdoc.json",
+    "docs:server": "cd docs/reference && serve",
+    "_dependTree": "destiny lib",
+    "_dev": "cd browser && serve",
+    "_devAll": "npm run _bpkg-app && npm run _bpkg-worker && cd browser && serve",
+    "_bpkg-app": "bpkg --browser --umd --plugin [ uglify-es --toplevel ] --name Bcoin --output browser/app.js lib/bcoin-browser.js",
+    "_bpkg-worker": "bpkg --browser --plugin [ uglify-es --toplevel ] --output browser/worker.js /lib/workers/worker.js",
+    "clean": "rm -f {browser/,}{bcoin.js,bcoin-worker.js,app.js,worker.js}",
+    "lint": "eslint $(cat .eslintfiles) || exit 0",
+    "lint-ci": "eslint $(cat .eslintfiles)",
+    "lint-file": "eslint",
+    "test": "bmocha --reporter spec test/*.js",
+    "test-browser": "NODE_BACKEND=js bmocha --reporter spec test/*.js",
+    "test-file": "bmocha --reporter spec",
+    "test-file-browser": "NODE_BACKEND=js bmocha --reporter spec",
+    "test-ci": "nyc -a -n 'lib/**/*.js' --reporter=lcov --reporter=text npm run test",
+    "_browserify": "browserify -s bcoin lib/bcoin-browser.js > browser/app.test.js",
+    "_rollup": "rollup lib/workers/worker.js -o bundle.js -f cjs",
+    "_webpack": "webpack --config webpack.browser.js",
+    "_webpack-browser": "webpack --config webpack.browser.js",
+    "_webpack-compat": "webpack --config webpack.compat.js",
+    "_webpack-node": "webpack --config webpack.node.js"
+  },
   "keywords": [
     "bcoin",
     "bitcoin",
@@ -84,10 +108,12 @@
     "nan"
   ],
   "devDependencies": {
-    "bmocha": "git+https://github.com/bcoin-org/bmocha.git#semver:=2.1.2",
     "@rollup/plugin-commonjs": "^16.0.0",
     "@rollup/plugin-json": "^4.1.0",
     "@rollup/plugin-node-resolve": "^10.0.0",
+    "bmocha": "git+https://github.com/bcoin-org/bmocha.git#semver:=2.1.2",
+    "bpkg": "^0.6.0",
+    "destiny": "^0.7.1",
     "rollup-plugin-livereload": "^2.0.0",
     "rollup-plugin-terser": "^7.0.2",
     "uglifyjs-webpack-plugin": "^2.2.0",
@@ -101,30 +127,6 @@
     "bwallet": "./bin/bwallet",
     "bcoin-cli": "./bin/bcoin-cli",
     "bwallet-cli": "./bin/bwallet-cli"
-  },
-  "scripts": {
-    "docs:gen": "jsdoc -c jsdoc.json",
-    "docs:server": "cd docs/reference && serve",
-
-    "bpkg-app": "bpkg --browser --umd --plugin [ uglify-es --toplevel ] --name Bcoin --output browser/app.js lib/bcoin-browser.js",
-    "bpkg-worker": "bpkg --browser --plugin [ uglify-es --toplevel ] --output browser/worker.js /lib/workers/worker.js",
-    
-    "clean": "rm -f {browser/,}{bcoin.js,bcoin-worker.js,app.js,worker.js}",
-    "lint": "eslint $(cat .eslintfiles) || exit 0",
-    "lint-ci": "eslint $(cat .eslintfiles)",
-    "lint-file": "eslint",
-    "test": "bmocha --reporter spec test/*.js",
-    "test-browser": "NODE_BACKEND=js bmocha --reporter spec test/*.js",
-    "test-file": "bmocha --reporter spec",
-    "test-file-browser": "NODE_BACKEND=js bmocha --reporter spec",
-    "test-ci": "nyc -a -n 'lib/**/*.js' --reporter=lcov --reporter=text npm run test",
-
-    "browserify": "browserify -s bcoin lib/bcoin-browser.js > browser/app.test.js",
-    "rollup": "rollup lib/workers/worker.js -o bundle.js -f cjs",
-    "webpack": "webpack --config webpack.browser.js",
-    "webpack-browser": "webpack --config webpack.browser.js",
-    "webpack-compat": "webpack --config webpack.compat.js",
-    "webpack-node": "webpack --config webpack.node.js"
   },
   "browser": {
     "./lib/hd/nfkd": "./lib/hd/nfkd-compat.js",
