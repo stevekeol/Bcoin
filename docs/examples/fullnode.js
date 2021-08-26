@@ -2,8 +2,6 @@
  * fullnode.js
  * 
  */
-
-
 console.time('Require Bcoin time');
 // const Bcoin = require('../../lib/bcoin-browser.js'); //
 const Bcoin = require('../..'); //在该路径下会默认读取package.json中main标识的文件作为入口

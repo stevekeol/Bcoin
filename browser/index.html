@@ -222,6 +222,10 @@
   }
 </script>
 <script>
+  /**
+   * (`npm run _devAll`: Bcoin已经挂载在全局global上了)
+   * 在global上挂载bfsprocess，其值是一个箭头函数
+   */
   Reflect.set(self, 'bfsprocess', () => console.log('jiege'))
 </script>
 </body>
