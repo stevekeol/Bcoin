@@ -1,4 +1,10 @@
 /* eslint-env browser */
+
+/**
+ * 该app.js文件需要加载在browser中
+ * 同理可以利用bpkg: bpkg --browser --output browser/src/_app.js browser/src/app.js
+ */
+
 'use strict';
 
 const Logger = require('blgr');
@@ -60,7 +66,7 @@ const node = new FullNode({
   query: true,
   prune: true,
   network: 'main',
-  memory: false,
+  memory: true, // 暂时false -> true
   logConsole: true,
   workers: true,
   workerFile: '/worker.js',

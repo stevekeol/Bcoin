@@ -4,9 +4,12 @@ const bweb = require('bweb');
 const fs = require('bfile');
 const WSProxy = require('./wsproxy');
 
-const index = fs.readFileSync(`${__dirname}/index.html`);
+// const index = fs.readFileSync(`${__dirname}/index.html`); // 自定义的主页
+const index = fs.readFileSync(`${__dirname}/_index.html`); // 官方提供的示例主页
 
-const app = fs.readFileSync(`${__dirname}/app.js`);
+// const app = fs.readFileSync(`${__dirname}/app.js`); // 自定义的
+const app = fs.readFileSync(`${__dirname}/src/_app.js`); // 官方提供的
+
 // const worker = fs.readFileSync(`${__dirname}/worker.js`);
 
 
@@ -15,7 +18,7 @@ const proxy = new WSProxy({
 });
 
 const server = bweb.server({
-  port: Number(process.argv[2]) || 8080,
+  port: Number(process.argv[2]) || 5000,
   sockets: false
 });
 

@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>bcoin webapp</title>
+  <title>Taiki webapp</title>
   <style>
     html {
       height: 100%;
@@ -120,30 +120,30 @@
    * Reference: create-a-blockchain-and-mempool.js
    * 在内存中创建区块链和交易池
    */
-  const bcoin = Bcoin;
+  const Taiki = Bcoin;
 
   /** 设置bcoin的环境为`回归测试` */
-  bcoin.set('regtest');
+  Taiki.set('regtest');
 
   /** 1. Bcoin.blockstore在合适的存储空间中创建区块(此处是说明在内存中以红黑树创建blockchain,mempool,miner) */
-  const blocks = bcoin.blockstore.create({
+  const blocks = Taiki.blockstore.create({
     memory: true
   });
 
   /** 2. Bcoin.Chain基于这些区块创建链 */
-  const chain = new bcoin.Chain({
+  const chain = new Taiki.Chain({
     network: 'regtest',
     memory: true,
     blocks: blocks
   });
 
   /** 3. Bcoin.Mempool基于这条链创建交易池 */
-  const mempool = new bcoin.Mempool({
+  const mempool = new Taiki.Mempool({
     chain: chain
   });
 
   /** Bcoin.Miner基于这条链和交易池创建矿工 */
-  const miner = new bcoin.Miner({
+  const miner = new Taiki.Miner({
     chain: chain,
     mempool: mempool,
     useWorkers: true // 确保矿工不会阻塞主线程
@@ -152,18 +152,25 @@
   (async () => {
     /** 打开chain */
     await blocks.open();
+    console.log("Taiki: blocks opened.")
+
     await chain.open();
+    console.log("Taiki: chain opened.")
 
     /** 打开Miner(初始化数据库等)(矿工将隐含的调用mempool.open()) */
     await miner.open();
+    console.log("Taiki: miner opened.")
 
     /** 创建一个CPU型的矿工作业 */
     const job = await miner.createJob();
+    console.log("Taiki: miner job created.")
 
-    /** 执行该作业 */
+    /** 异步执行该作业 */
     const block = await job.mineAsync();
-    console.log('Adding %s to the blockchain.', block.rhash());
+    console.log("Taiki: block is mined.", block)
+
     await chain.add(block);
+    console.log('Taiki: adding %s to the blockchain.', block.rhash());
   })().catch((err) => {
     console.error(err.stack);
     process.exit(1);
@@ -177,7 +184,7 @@
     try {
 
       // attempt to create an HD object from the input string
-      xpub = Bcoin.hd.fromBase58(string);
+      xpub = Taiki.hd.fromBase58(string);
 
     } catch (e) {
 
@@ -187,6 +194,7 @@
 
     }
     document.getElementById('xpub-check').innerHTML = `xpub OK`;
+    console.log(xpub)
 
     // 2. derive network from first letter of string
     const names = {
@@ -200,8 +208,8 @@
     // 2. get all other metadata imported by bcoin
     const depth = xpub.depth;
     const childIndex = xpub.childIndex;
-    const hard = childIndex >= Bcoin.hd.common.HARDENED;
-    const account = hard ? (childIndex - Bcoin.hd.common.HARDENED) : childIndex;
+    const hard = childIndex >= Taiki.hd.common.HARDENED;
+    const account = hard ? (childIndex - Taiki.hd.common.HARDENED) : childIndex;
 
     // 2. compose output and insert into html
     let explain = '';
@@ -227,6 +235,7 @@
    * 在global上挂载bfsprocess，其值是一个箭头函数
    */
   Reflect.set(self, 'bfsprocess', () => console.log('jiege'))
+  Reflect.set(self, 'Taiki', Bcoin) // 业务中就可以使用Taiki!(此时Bcoin/bcoin/Taiki均可用)
 </script>
 </body>
 </html>
