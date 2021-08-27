@@ -89483,7 +89483,7 @@ module.exports = {
     "docs:server": "cd docs/reference && serve",
     "_linec": "cd lib && linec",
     "_dependTree": "destiny lib",
-    "_devServer": "node browser/server.js",
+    "_devServer": "bpkg --browser --output browser/src/_app.js browser/src/app.js && node browser/server.js",
     "_dev": "cd browser && serve",
     "_devAll": "npm run _bpkg-app && npm run _bpkg-worker && cd browser && serve",
     "_bpkg-app": "bpkg --browser --umd --plugin [ uglify-es --toplevel ] --name Bcoin --output browser/app.js lib/bcoin-browser.js",

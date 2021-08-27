@@ -37,6 +37,7 @@ logger.writeConsole = function writeConsole(level, module, args) {
   const name = Logger.levelsByVal[level];
   const msg = this.fmt(args, false);
 
+  // 每当日志超过1000条，就清空
   if (++scrollback > 1000) {
     log.innerHTML = '';
     scrollback = 1;
@@ -79,6 +80,7 @@ const node = new FullNode({
   plugins: [plugin]
 });
 
+/** 在当前节点node上按需动态增加新的功能: 钱包数据库 */
 const {wdb} = node.require('walletdb');
 wdb.options.witness = true;
 
@@ -200,6 +202,7 @@ function escape(html, encode) {
 function addItem(item, entry) {
   const height = entry ? entry.height : -1;
 
+  /** 保留最后20条tx */
   if (items.length === 20) {
     const el = items.shift();
     tdiv.removeChild(el);
@@ -213,11 +216,8 @@ function addItem(item, entry) {
   );
 
   tdiv.appendChild(el);
-
   setMouseup(el, item);
-
   items.push(el);
-
   chainState.innerHTML = ''
     + `tx=${node.chain.db.state.tx} `
     + `coin=${node.chain.db.state.coin} `
@@ -282,7 +282,13 @@ async function _formatWallet(wallet) {
   }
 }
 
+/**
+ * 链上注册了"block"区块事件.
+ */
 node.chain.on('block', addItem);
+/**
+ * 内存交易池注册了"tx"交易事件.
+ */
 node.mempool.on('tx', addItem);
 
 (async () => {

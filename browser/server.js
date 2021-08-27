@@ -12,21 +12,12 @@ const app = fs.readFileSync(`${__dirname}/src/_app.js`); // 官方提供的
 
 // const worker = fs.readFileSync(`${__dirname}/worker.js`);
 
-
-const proxy = new WSProxy({
-  ports: [8333, 18333, 18444, 28333, 28901]
-});
-
 const server = bweb.server({
   port: Number(process.argv[2]) || 5000,
   sockets: false
 });
 
 server.use(server.router());
-
-proxy.on('error', (err) => {
-  console.error(err.stack);
-});
 
 server.on('error', (err) => {
   console.error(err.stack);
@@ -44,6 +35,17 @@ server.get('/app.js', (req, res) => {
 //   res.send(200, worker, 'js');
 // });
 
+const proxy = new WSProxy({
+  ports: [8333, 18333, 18444, 28333, 28901]
+});
+
+proxy.on('error', (err) => {
+  console.error(err.stack);
+});
+
+/**
+ * 将代理服务器proxy附着在server.http(http服务器)上
+ */
 proxy.attach(server.http);
 
 server.open();
