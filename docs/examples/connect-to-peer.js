@@ -8,12 +8,27 @@
  *    $ node connect-to-peer.js 127.0.0.1:48444
  */
 
+/**
+ * Usage: (Node)
+ * 在本地测试网络上运行另一个Node(可以以--network=regtest为参数开启)
+ */
+
 const bcoin = require('../..');
 const network = bcoin.Network.get('regtest');
 
+/**
+ * 根据传入的options
+ */
 const peer = bcoin.Peer.fromOptions({
+  // regtest网络对象作为键
   network: 'regtest',
+  /**
+   * agent: ???
+   */
   agent: 'my-subversion',
+  /**
+   * hasWitness: ???
+   */
   hasWitness: () => {
     return false;
   }
