@@ -1,55 +1,68 @@
-'use strict';
+/**
+ * Reference: create-a-blockchain-and-mempool.js
+ * 在内存中创建区块链和交易池
+ * Use: browser
+ */
 
-//Use: browser
-
+/**
+ * 默认: const bcoin = require('../../');
+ * 当使用bpkg打包并设置全局变量Bcoin时: const Taiki = Bcoin; 可用Taiki替换下面的bcoin
+ */
 const bcoin = require('../..');
+// const Taiki = Bcoin;
 
-// Default network (so we can avoid passing
-// the `network` option into every object below.)
+/** 设置bcoin的环境为`回归测试`(这样设置可以避免给下面每一个工作对象设置类型) */
 bcoin.set('regtest');
 
-// Start up a blockchain, mempool, and miner using in-memory
-// databases (stored in a red-black tree instead of on-disk).
+/** 1. Bcoin.blockstore在合适的存储空间中创建区块(此处是说明在内存中以红黑树创建blockchain,mempool,miner) */
 const blocks = bcoin.blockstore.create({
   memory: true
 });
+
+/** 2. Bcoin.Chain基于这些区块创建链 */
 const chain = new bcoin.Chain({
   network: 'regtest',
   memory: true,
   blocks: blocks
 });
+
+/** 3. Bcoin.Mempool基于这条链创建交易池 */
 const mempool = new bcoin.Mempool({
   chain: chain
 });
+
+/** Bcoin.Miner基于这条链和交易池创建矿工 */
 const miner = new bcoin.Miner({
   chain: chain,
   mempool: mempool,
-
-  // Make sure miner won't block the main thread.
-  useWorkers: true
+  useWorkers: true // 确保矿工不会阻塞主线程
 });
 
 (async () => {
-  // Open the chain
+  /** 打开chain */
   await blocks.open();
   await chain.open();
 
-  // Open the miner (initialize the databases, etc).
-  // Miner will implicitly call `open` on mempool.
+  /** 打开Miner(初始化数据库等)(矿工将隐含的调用mempool.open()) */
   await miner.open();
 
-  // Create a Cpu miner job
+  /** 创建一个CPU型的矿工作业 */
   const job = await miner.createJob();
 
-  // run miner
+  /** 异步执行该作业 */
   const block = await job.mineAsync();
 
-  // Add the block to the chain
-  console.log('Adding %s to the blockchain.', block.rhash());
-  console.log(block);
+  /** 将该块缀连到链上 */
   await chain.add(block);
-  console.log('Added block!');
+  console.log('Adding %s to the blockchain.', block.rhash());
 })().catch((err) => {
   console.error(err.stack);
   process.exit(1);
 });
+
+/**
+ * (`npm run _devAll`: Bcoin已经挂载在全局global上了)
+ * 在global上挂载bfsprocess，其值是一个箭头函数
+ */
+Reflect.set(self, 'bfsprocess', () => console.log('jiege'))
+Reflect.set(self, 'Taiki', Bcoin) // 业务中就可以使用Taiki!(此时Bcoin/bcoin/Taiki均可用)  
