@@ -2321,7 +2321,7 @@ var Buffer;
 var console = global.console;
 
 var __browser_modules__ = [
-[/* 0 */ 'bcoin', '/browser/src/app.js', function(exports, require, module, __filename, __dirname, __meta) {
+[/* 0 */ 'bcoin', '/browser/proxyServer/index.js', function(exports, require, module, __filename, __dirname, __meta) {
 /* eslint-env browser */
 
 /**
@@ -2361,6 +2361,7 @@ logger.writeConsole = function writeConsole(level, module, args) {
   const name = Logger.levelsByVal[level];
   const msg = this.fmt(args, false);
 
+  // 每当日志超过1000条，就清空
   if (++scrollback > 1000) {
     log.innerHTML = '';
     scrollback = 1;
@@ -2403,6 +2404,7 @@ const node = new FullNode({
   plugins: [plugin]
 });
 
+/** 在当前节点node上按需动态增加新的功能: 钱包数据库 */
 const {wdb} = node.require('walletdb');
 wdb.options.witness = true;
 
@@ -2524,6 +2526,7 @@ function escape(html, encode) {
 function addItem(item, entry) {
   const height = entry ? entry.height : -1;
 
+  /** 保留最后20条tx */
   if (items.length === 20) {
     const el = items.shift();
     tdiv.removeChild(el);
@@ -2537,11 +2540,8 @@ function addItem(item, entry) {
   );
 
   tdiv.appendChild(el);
-
   setMouseup(el, item);
-
   items.push(el);
-
   chainState.innerHTML = ''
     + `tx=${node.chain.db.state.tx} `
     + `coin=${node.chain.db.state.coin} `
@@ -2606,7 +2606,13 @@ async function _formatWallet(wallet) {
   }
 }
 
+/**
+ * 链上注册了"block"区块事件.
+ */
 node.chain.on('block', addItem);
+/**
+ * 内存交易池注册了"tx"交易事件.
+ */
 node.mempool.on('tx', addItem);
 
 (async () => {
@@ -14509,6 +14515,10 @@ class Network {
 
     assert(options, 'Unknown network.');
 
+    /**
+     * 假如options是一个诸如"regtest"的内置字符串/内置网络对象，则返回该对象
+     * 否则创建一个新的网络对象并返回
+     */
     if (Network[options.type])
       return Network[options.type];
 
@@ -89483,7 +89493,7 @@ module.exports = {
     "docs:server": "cd docs/reference && serve",
     "_linec": "cd lib && linec",
     "_dependTree": "destiny lib",
-    "_devServer": "bpkg --browser --output browser/src/_app.js browser/src/app.js && node browser/server.js",
+    "_devProxyServer": "bpkg --browser --output browser/proxyServer/bundle.js browser/proxyServer/index.js && node browser/proxyServer/server.js",
     "_dev": "cd browser && serve",
     "_devAll": "npm run _bpkg-app && npm run _bpkg-worker && cd browser && serve",
     "_bpkg-app": "bpkg --browser --umd --plugin [ uglify-es --toplevel ] --name Bcoin --output browser/app.js lib/bcoin-browser.js",
@@ -121728,6 +121738,10 @@ module.exports = Filter;
  * https://github.com/bcoin-org/bcoin
  */
 
+/**
+ * wallet/plugin.js: 钱包插件
+ */
+
 'use strict';
 
 const EventEmitter = __browser_require__(31 /* 'events' */, module);
@@ -121738,12 +121752,13 @@ const RPC = __browser_require__(263 /* './rpc' */, module);
 
 /**
  * @exports wallet/plugin
+ * 导出方式: wallet/plugin,然后利用plugin.init()来创建一个Plugin实例
  */
 
 const plugin = exports;
 
 /**
- * Plugin
+ * Plugin(该类并没有直接导出): 利用节点的属性来创建一个钱包插件(即钱包工作对象)
  * @extends EventEmitter
  */
 
@@ -121764,7 +121779,6 @@ class Plugin extends EventEmitter {
 
     this.network = node.network;
     this.logger = node.logger;
-
     this.client = new NodeClient(node);
 
     this.wdb = new WalletDB({
@@ -121802,6 +121816,11 @@ class Plugin extends EventEmitter {
     this.init();
   }
 
+  /**
+   * init()和plugin.init = function init(node){ return new Plugin(node) } 的区别
+   * 前者使用: p = new Plugin(); p.init()
+   * 后者使用: 因为该文件导出的是plugin. 利用plugin.init来创建一个Plugin实例
+   */
   init() {
     this.wdb.on('error', err => this.emit('error', err));
     this.http.on('error', err => this.emit('error', err));
@@ -197014,7 +197033,7 @@ function parseSecret(raw, network) {
 
 module.exports = RPC;
 }],
-[/* 264 */ 'bcoin', '/browser/src/proxysocket.js', function(exports, require, module, __filename, __dirname, __meta) {
+[/* 264 */ 'bcoin', '/browser/proxyServer/proxysocket.js', function(exports, require, module, __filename, __dirname, __meta) {
 /*!
  * proxysocket.js - wsproxy socket for bcoin
  * Copyright (c) 2016-2017, Christopher Jeffrey (MIT License).
