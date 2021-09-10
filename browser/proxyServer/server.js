@@ -4,12 +4,8 @@ const bweb = require('bweb');
 const fs = require('bfile');
 const WSProxy = require('./wsproxy');
 
-// const index = fs.readFileSync(`${__dirname}/index.html`); // 自定义的主页
-const index = fs.readFileSync(`${__dirname}/_index.html`); // 官方提供的示例主页
-
-// const app = fs.readFileSync(`${__dirname}/app.js`); // 自定义的
-const app = fs.readFileSync(`${__dirname}/src/_app.js`); // 官方提供的
-
+const index = fs.readFileSync(`${__dirname}/index.html`);
+const bundle = fs.readFileSync(`${__dirname}/bundle.js`);
 // const worker = fs.readFileSync(`${__dirname}/worker.js`);
 
 const server = bweb.server({
@@ -27,8 +23,8 @@ server.get('/', (req, res) => {
   res.send(200, index, 'html');
 });
 
-server.get('/app.js', (req, res) => {
-  res.send(200, app, 'js');
+server.get('/bundle.js', (req, res) => {
+  res.send(200, bundle, 'js');
 });
 
 // server.get('/worker.js', (req, res) => {
