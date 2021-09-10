@@ -7,6 +7,9 @@
 /**
  * 默认: const bcoin = require('../../');
  * 当使用bpkg打包并设置全局变量Bcoin时: const Taiki = Bcoin; 可用Taiki替换下面的bcoin
+ * 
+ * Reflect.set(self, 'bfsprocess', () => console.log('jiege'))
+ * Reflect.set(self, 'Taiki', Bcoin) // 业务中就可以使用Taiki!(此时Bcoin/bcoin/Taiki均可用)  
  */
 const bcoin = require('../..');
 // const Taiki = Bcoin;
@@ -59,10 +62,3 @@ const miner = new bcoin.Miner({
   console.error(err.stack);
   process.exit(1);
 });
-
-/**
- * (`npm run _devAll`: Bcoin已经挂载在全局global上了)
- * 在global上挂载bfsprocess，其值是一个箭头函数
- */
-Reflect.set(self, 'bfsprocess', () => console.log('jiege'))
-Reflect.set(self, 'Taiki', Bcoin) // 业务中就可以使用Taiki!(此时Bcoin/bcoin/Taiki均可用)  

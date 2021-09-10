@@ -30,3 +30,4 @@ tojs() {
 
 getseeds "$url_main" | tojs > "${dir}/../lib/net/seeds/main.js"
 getseeds "$url_testnet" | tojs > "${dir}/../lib/net/seeds/testnet.js"
+

@@ -629,3 +629,4 @@ Becomes this:
 ### Notable changes
 
 - Initial tagged release.
+
