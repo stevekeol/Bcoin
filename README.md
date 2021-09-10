@@ -9,6 +9,8 @@
 + [Bcion详尽的API文档](https://bcoin.io/api-docs/index.html#bcoin-client-requests)
 + [Bcoin在Browser中的使用](https://bcoin.io/guides/browser)
 
+[重点参考文档www.xuedaojia.net](https://www.xuedaojia.net/docs/Bcoin/bcoin%E7%9A%84%E6%B2%89%E8%BF%B7%E4%B9%8B%E8%B7%AF)
+
 ## 分支
 
 > 暂时还没这样做!
